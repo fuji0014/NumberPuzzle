@@ -8,10 +8,12 @@ public class MainModel {
 	String gameMode;
 	GameMVC mvc;
 	GameServer server;
+	GameClient client;
 	
 	public MainModel() {
 		mvc = new GameMVC();
 		server = new GameServer();
+		client = new GameClient();
 		gameMode = "Standalone";
 	}
 	
@@ -24,6 +26,7 @@ public class MainModel {
 			server.start();
 			break;
 		case "Client":
+			client.start();
 			break;
 		}
 	}

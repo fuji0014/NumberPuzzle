@@ -5,7 +5,6 @@ import Model.ServerModel;
 import View.ServerView;
 
 public class GameServer {
-
 	ServerModel serverModel;			
 	ServerView serverView;	
 	ServerController serverController;
