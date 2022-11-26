@@ -8,7 +8,7 @@
  * Compiler Eclipse IDE for Java Developers
  * Purpose: This class initializes the size of the puzzle and also runs the game through main function
  */
-package NumPuz;
+package Model;
 
 /**
  * Class name: GameModel
@@ -83,6 +83,9 @@ public class GameModel {
 	 * Algorithm: Assigns default values for class variables
 	 */
 	public GameModel() {
+	}
+	
+	public void play() {
 		time = 180;
 		text = null;
 		dimSize = 3;
@@ -248,7 +251,7 @@ public class GameModel {
 	 * Method name: setDefaultValues 
 	 * Purpose: Sets default values for game level, dimension size, and game type
 	 */
-	void setDefaultValues() {
+	public void setDefaultValues() {
 	    setGameLevel("Easy");	
 	    setDimSize(3);
 		setGameType("Numbers");

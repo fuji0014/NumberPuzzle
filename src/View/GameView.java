@@ -9,7 +9,7 @@
  * Purpose: This class contains constructor that initializes the window for the game and adds GUI to the frames 
  * and dialogs
  */
-package NumPuz;
+package View;
 
 import java.awt.Color;
 import java.awt.Dialog;
@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.Timer;
+
+import Model.GameModel;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -255,7 +257,10 @@ public class GameView{
 	 */
 	public GameView (GameModel gameModel) {
 		this.model = gameModel;
-		
+	}
+	
+	public void play() {
+		model.play();
 		initPuzzleButton();
 		//Splash Screen
 		JWindow window = new JWindow();
@@ -264,7 +269,7 @@ public class GameView{
 		
 		//Main game frame
 		frame = new JFrame("NumPuz - Amy Fujimoto");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		//Only this window closes if x is clicked
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);		//Only this window closes if x is clicked
 		frame.setLayout(null);
 		frame.setSize(665,690);
 		frame.setResizable(false);
@@ -289,7 +294,7 @@ public class GameView{
 	 * Algorithm: Initialize the puzzle button with dimension size and loop over the button array
 	 * to set text to each one, having the last button as null to have empty tile
 	 */
-	void initPuzzleButton() {	
+	public void initPuzzleButton() {	
 		model.initPuzzleButtonValues();
 		
 		puzzleButton = new JButton[model.getDimSize()][model.getDimSize()];
@@ -322,7 +327,7 @@ public class GameView{
 	 * Algorithm: Open a new dialog which shows the correct location of the tiles and
 	 * while looking at the answer, the time still ticks.
 	 */
-	void showAnswerWindow() {
+	public void showAnswerWindow() {
 		JDialog dialog = new JDialog(frame, "Answer sheet", Dialog.ModalityType.DOCUMENT_MODAL);
 		JPanel panel = new JPanel();
 		middlePanel.setBackground(gameBGColor);
@@ -341,7 +346,7 @@ public class GameView{
 	 * Algorithm: When timer hits 0, timer stops and sets the value to 180, and 
 	 * show a dialog indicating that the user lost the game
 	 */
-	void timerSettings() {
+	public void timerSettings() {
 		if(model.getTime() == 0) {
 			timer.stop();
 			model.setTime(180);
@@ -355,7 +360,7 @@ public class GameView{
 	 * Algorithm: Stops the timer and displays dialog with object options and restarts setting, starts new game, or exits system 
 	 * when user selects try again, new game, or exit game respectively.
 	 */
-	void displayLostDialog() {
+	public void displayLostDialog() {
 		timer.stop();
 		//Custom button text
 		Object[] options = {"Try Again",
@@ -392,7 +397,7 @@ public class GameView{
 	 * Algorithm: Stops the timer and displays dialog with object options and new game or exits system 
 	 * when user selects play again or exit game, respectively.
 	 */
-	void displayWinDialog() {
+	public void displayWinDialog() {
 		timer.stop();
 		//Custom button text
 		Object[] options = {"Play Again",
@@ -419,7 +424,7 @@ public class GameView{
 	 * Purpose: Display error message to the user when changing dimension in text mode
 	 * Algorithm: Message with JOptionPane warning message 
 	 */
-	void displayErrorDialog() {
+	public void displayErrorDialog() {
 		JOptionPane.showMessageDialog(frame,
 			    "You have changed the dimension while in text.\n"
 				+ "The buttons has been put back to number type.",
@@ -432,7 +437,7 @@ public class GameView{
 	 * Purpose: Display error message to the user when trying to start the game without shuffling
 	 * Algorithm: Message with JOptionPane warning message 
 	 */
-	void displayShuffleErrorDialog() {
+	public void displayShuffleErrorDialog() {
 		JOptionPane.showMessageDialog(frame,
 			    "Please start a \"New Game\" prior to moving the tiles \n"
 				+ "or viewing the answer.",
@@ -445,7 +450,7 @@ public class GameView{
 	 * Purpose: Display message to the user to provide "about" information to the user
 	 * Algorithm: Show message with JOptionPane message dialog method
 	 */
-	void aboutDialog() {
+	public void aboutDialog() {
 		timer.stop();
 		JOptionPane.showMessageDialog(frame,
 			    "About game: \nAmy Fujimoto\n040974489\nFall 2022 JAP");
@@ -457,7 +462,7 @@ public class GameView{
 	 * Algorithm: Initializes the dialog, label, color buttons, and adds components to dialog 
 	 * in appropriate location
 	 */
-	void initColorDialog() {
+	public void initColorDialog() {
 		dialog = new JDialog(frame, "Color", Dialog.ModalityType.DOCUMENT_MODAL);
 		JLabel label = new JLabel("Choose a color:");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -494,7 +499,7 @@ public class GameView{
 	 * Purpose: Set the dialog settings for color dialog
 	 * Algorithm: Stop the timer and set size, visibility and resizability of the dialog
 	 */
-	void colorDialog() {
+	public void colorDialog() {
 		timer.stop();
 		dialog.setSize(175,225);
 		dialog.setVisible(true);
@@ -506,7 +511,7 @@ public class GameView{
 	 * Purpose: Display confirmation message to the user when trying to exit the game
 	 * Algorithm: Message with JOptionPane warning message and when user selects yes, it will exit the game
 	 */
-	void exitDialog() {
+	public void exitDialog() {
 		int exit = JOptionPane.showOptionDialog(null, "Are you sure you want to Exit the game?", "Exit", 
 				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
 		if (exit == 0) {
@@ -521,7 +526,7 @@ public class GameView{
 	 * Algorithm: Message with JOptionPane showInputDialog method and saves the text in the model
 	 * if the text is appropriate length, otherwise it will prompt an error dialog
 	 */
-	void textInputDialog() {
+	public void textInputDialog() {
 		text = (String)JOptionPane.showInputDialog(
 	               frame,
 	               "Enter a text for the game:", 
@@ -547,7 +552,7 @@ public class GameView{
 	 * Purpose: Display error message to the user when user entered a text too short
 	 * Algorithm: Message with JOptionPane warning message 
 	 */
-	void inputErrorDialog() {
+	public void inputErrorDialog() {
 		JOptionPane.showMessageDialog(frame,
 			    "The text you entered is too short.\n"
 			    + "Please try again.",
@@ -560,7 +565,7 @@ public class GameView{
 	 * Purpose: Display message to the user when they successfully saved the game button to a file
 	 * Algorithm: Message with JOptionPane showMessageDialog
 	 */
-    void successfulSaveDialog() {		
+	public void successfulSaveDialog() {		
 		JOptionPane.showMessageDialog(frame,
 			    "Successfully saved to CSV.");
 	}
@@ -570,7 +575,7 @@ public class GameView{
 	 * Purpose: Display message to the user when they successfully loaded the game button from a file
 	 * Algorithm: Message with JOptionPane showMessageDialog
 	 */
-	void successfulLoadDialog() {		
+    public void successfulLoadDialog() {		
 		JOptionPane.showMessageDialog(frame,
 			    "Successfully loaded from CSV.");
 	}
@@ -580,7 +585,7 @@ public class GameView{
 	 * Purpose: Display message to the user when they failed saved the game button to a file
 	 * Algorithm: Message with JOptionPane showMessageDialog and Warning message method
 	 */
-	void saveErrorDialog() {
+	public void saveErrorDialog() {
 		JOptionPane.showMessageDialog(frame,
 			    "Not able to save. Please try again.",
 			    "Error notice",
@@ -592,7 +597,7 @@ public class GameView{
 	 * Purpose: Display message to the user when they failed to load the game button from a file
 	 * Algorithm: Message with JOptionPane showMessageDialog and Warning message method
 	 */	
-	void loadErrorDialog() {
+	public void loadErrorDialog() {
 		JOptionPane.showMessageDialog(frame,
 			    "Not able to load. Please try again.",
 			    "Error notice",
@@ -605,9 +610,9 @@ public class GameView{
 	 * Algorithm: Display icon on a window without any buttons and show it for only a certain amount of time
 	 * @param window JWindow to display the label and title on
 	 */
-	void splashScreenGUI(JWindow window) {
+	public void splashScreenGUI(JWindow window) {
 		//ImageIcon title = new ImageIcon("C:\\Users\\Admin\\CST8221_workspace\\JAP_A22\\src\\NumPuz\\images\\SplashScreen.PNG");
-		JLabel label = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("NumPuz/images/SplashScreen.PNG")));
+		JLabel label = new JLabel(new ImageIcon(getClass().getClassLoader().getResource("images/SplashScreen.PNG")));
 		window.getContentPane().add(label);
 		label.setBounds(0, -15, 300, 250);
 		try {
@@ -622,7 +627,7 @@ public class GameView{
 	 * Purpose: Adds multiple panel and menu bar to the main frame of the NumPuz game
 	 * Algorithm: Initializes the each panels by setting background and bounds and adds it to the main frame
 	 */
-	void addElementsToMainFrame() {		
+	public void addElementsToMainFrame() {		
 		menuBar();
 		
 		//Top panel
@@ -672,17 +677,17 @@ public class GameView{
 	 * Purpose: To set the menu bar that will be located at the top of the game frame
 	 * Algorithm: Initializes JMenuBar to create menu bar and adds components
 	 */
-	void menuBar() {
+	public void menuBar() {
 		JMenuBar menubar = new JMenuBar();
 
 		//First menu selection
 		JMenu game = new JMenu("Game");
 		menubar.add(game);
-		newGame = new JMenuItem("New Game", new ImageIcon(getClass().getClassLoader().getResource("NumPuz/images/shuffleIcon.PNG")));
-		solution = new JMenuItem("Show Solution", new ImageIcon(getClass().getClassLoader().getResource("NumPuz/images/showAnswerIcon.PNG")));
-		saveGame = new JMenuItem("Save", new ImageIcon(getClass().getClassLoader().getResource("NumPuz/images/saveIcon.PNG")));
-		loadGame = new JMenuItem("Load", new ImageIcon(getClass().getClassLoader().getResource("NumPuz/images/loadIcon.PNG")));
-		exit = new JMenuItem("Exit", new ImageIcon(getClass().getClassLoader().getResource("NumPuz/images/exitIcon.PNG")));
+		newGame = new JMenuItem("New Game", new ImageIcon(getClass().getClassLoader().getResource("images/shuffleIcon.PNG")));
+		solution = new JMenuItem("Show Solution", new ImageIcon(getClass().getClassLoader().getResource("images/showAnswerIcon.PNG")));
+		saveGame = new JMenuItem("Save", new ImageIcon(getClass().getClassLoader().getResource("images/saveIcon.PNG")));
+		loadGame = new JMenuItem("Load", new ImageIcon(getClass().getClassLoader().getResource("images/loadIcon.PNG")));
+		exit = new JMenuItem("Exit", new ImageIcon(getClass().getClassLoader().getResource("images/exitIcon.PNG")));
 						
 		//Add menu items to game menu tab
 		game.add(newGame);
@@ -694,8 +699,8 @@ public class GameView{
 		//Second menu selection
 		JMenu help = new JMenu("Help");
 		menubar.add(help);
-		about = new JMenuItem("About", new ImageIcon(getClass().getClassLoader().getResource("NumPuz/images/aboutIcon.PNG")));
-		color = new JMenuItem("Color", new ImageIcon(getClass().getClassLoader().getResource("NumPuz/images/colorIcon.PNG")));
+		about = new JMenuItem("About", new ImageIcon(getClass().getClassLoader().getResource("images/aboutIcon.PNG")));
+		color = new JMenuItem("Color", new ImageIcon(getClass().getClassLoader().getResource("images/colorIcon.PNG")));
 		
 		//Add menu items to help menu tab
 		help.add(color);
@@ -712,7 +717,7 @@ public class GameView{
 	 * Purpose: Contains buttons for the top panel
 	 * Algorithm: Initializes JButtons necessary for the panel
 	 */
-	void topGUI() {
+	public void topGUI() {
 		printTitle();
 		
 		//Reset
@@ -733,7 +738,7 @@ public class GameView{
 	 * Purpose: Contains dropdown selectiong and buttons for the left panel
 	 * Algorithm: Calls the methods that sets up the components
 	 */
-	void leftGUI() {
+	public void leftGUI() {
 		dropDown();						//Level and Dimension selections
 		colorButton();
 		//radioButton(panel);						//Design or Play selection
@@ -745,7 +750,7 @@ public class GameView{
 	 * Purpose: Contains the method to display the main game feature
 	 * Algorithm: Calls the gameButton method
 	 */
-	void mainGUI() {
+	public void mainGUI() {
 		gameButton(currentColor);
 	}
 	
@@ -754,7 +759,7 @@ public class GameView{
 	 * Purpose: Contains initialization of the labels that are to be displayed on the panel
 	 * Algorithm: Initializes JLabel for each label and sets their positions
 	 */
-	void rightGUI() {
+	public void rightGUI() {
 		//Moves
 	    JLabel pointsLabel = new JLabel();
 	    pointsLabel.setText("Points");
@@ -796,7 +801,7 @@ public class GameView{
 	 * Purpose: Include the GUI component for the bottom panel
 	 * Algorithm: Initializes JButtons necessary for the panel
 	 */
-	void bottomGUI() {
+	public void bottomGUI() {
 		//Show answer button
 		showButton = new JButton("Show Answer");
 		showButton.setBounds(265, 5, 120, 20);
@@ -810,9 +815,9 @@ public class GameView{
 	 * Purpose: Contains initialization of the labels that are to be displayed on the panel
 	 * Algorithm: Initializes the panel and reads in the file to be used as the title located on the top panel
 	 */
-	void printTitle() {
+	public void printTitle() {
 		JLabel label = new JLabel();
-		ImageIcon title = new ImageIcon(getClass().getClassLoader().getResource("NumPuz/images/Title.png"));
+		ImageIcon title = new ImageIcon(getClass().getClassLoader().getResource("images/Title.png"));
 		label.setIcon(title);
 		label.setBounds(110, 5, 500, 100);
 		topPanel.add(label);
@@ -823,7 +828,7 @@ public class GameView{
 	 * Purpose: Contains initialization of components that are to be displayed on the panel
 	 * Algorithm: Initialize the objects and sets the components in the correct location and adds it to the panel
 	 */
-	void dropDown() {
+	public void dropDown() {
 		//Level
 		JLabel levelLabel = new JLabel();
 		levelLabel.setText("Level");
@@ -865,7 +870,7 @@ public class GameView{
 	 * Purpose: Contains initialization of color button that are to be displayed on the panel
 	 * Algorithm: Initialize the objects and sets the button in the correct location and adds it to the panel
 	 */
-	void colorButton() {
+	public void colorButton() {
 		colorButton = new JButton("Color");
 		colorButton.setBounds(15, 225, 75, 20);
   		
@@ -878,7 +883,7 @@ public class GameView{
 	 * Purpose: Contains initialization of start timer button that are to be displayed on the panel
 	 * Algorithm: Initialize the objects and sets the button in the correct location and adds it to the panel
 	 */
-	void timerStartButton() {
+	public void timerStartButton() {
   		startButton = new JButton("Start");
   		startButton.setBounds(15, 275, 70, 20);
   		
@@ -890,7 +895,7 @@ public class GameView{
 	 * Purpose: Contains initialization of stop timer button that are to be displayed on the panel
 	 * Algorithm: Initialize the objects and sets the button in the correct location and adds it to the panel
 	 */
-	void timerStopButton() {
+	public void timerStopButton() {
   		stopButton = new JButton("Stop");
   		stopButton.setBounds(15, 275, 70, 20);
   		
@@ -903,7 +908,7 @@ public class GameView{
 	 * @param mainColor Color object for current color update
 	 * Algorithm: Reads the puzzleButton array to add the button to the panel
 	 */
-	void gameButton(Color mainColor) {
+	public void gameButton(Color mainColor) {
 		int size = puzzleButton.length;
 		gameTiles = new GridLayout(size,size);
 		
@@ -928,7 +933,7 @@ public class GameView{
 	 * Purpose: Updates the main game button for when color, dimension, type changes
 	 * Algorithm: Reads the puzzleButton array to adjust the color, dim, type if any of them changed
 	 */
-	void updateGameButton() {
+	public void updateGameButton() {
 		int size = puzzleButton.length;
 		
 		middlePanel.setLayout(gameTiles);
@@ -951,7 +956,7 @@ public class GameView{
 	 * @param panel Object of JPanel to show the answer of the game on
 	 * Algorithm: Reads the puzzleButton array to add the button to the panel
 	 */
-	void showAnswer(JPanel panel) {
+	public void showAnswer(JPanel panel) {
 		int size = model.getDimSize();
 		GridLayout grid = new GridLayout(size,size);
 		JButton tile;
@@ -988,7 +993,7 @@ public class GameView{
 	 * Algorithm: Collect the location of the tile clicked and swap the location of the button with the empty slot.
 	 * The button is to be only moved if they are directly beside the empty slot.
 	 */
-	void moveButton(JButton button) {
+	public void moveButton(JButton button) {
 		int clickedTile_i = -1;
 		int clickedTile_j = -1;
 		
@@ -1027,7 +1032,7 @@ public class GameView{
 	 * Algorithm: Loops over each of the puzzle button displayed on the panel
 	 * and removes them.
 	 */
-	void removeGameButton() {
+	public void removeGameButton() {
 		int size = puzzleButton.length;
 		for (int i = 0; i < size; ++i) {
 			for (int j = 0; j < size; ++j) {
@@ -1042,7 +1047,7 @@ public class GameView{
 	 * Algorithm: Call methods to reset setting to default, remove button to avoid overlays, shuffle the tiles,
 	 * update the button, and update the new empty tile location.
 	 */
-	void newGame() {
+	public void newGame() {
 		restartSettings();
 		removeGameButton();
 		shufflePuzzle();
@@ -1062,7 +1067,7 @@ public class GameView{
 	 * Algorithm: Stops the timer and resets the count to 0 and time to the appropriate time
 	 * as per dimension size and difficulty
 	 */
-	void restartSettings() {
+	public void restartSettings() {
 		timer.stop();
 		model.setCount(0);
 		updateCountLabel();
@@ -1136,7 +1141,7 @@ public class GameView{
 		List<String> recordsList = new ArrayList<String>();
 		String delimiter = ",";
 		String currentLine;
-		String filepath = "src/NumPuz/save-load_file/numpuzFile.csv";
+		String filepath = "src/save-load_file/numpuzFile.csv";
 		
 		// TODO Make a deep copy of the button in case of error
  		try {
@@ -1188,7 +1193,7 @@ public class GameView{
 	 * Purpose: Update the location of the empty tile
 	 * Algorithm: Loops over the puzzle buttons and retrieve the index of the empty tile 
 	 */
-	void updateEmptyTile() {
+	public void updateEmptyTile() {
 		for (int i = 0; i < model.getDimSize(); ++i) {
 			for (int j = 0; j < model.getDimSize(); ++j) {
 				if(puzzleButton[i][j].getText() == null) {
@@ -1204,7 +1209,7 @@ public class GameView{
 	 * Purpose: Update the counter of the label
 	 * Algorithm: Retrieve current count and set it to count label
 	 */
-	void updateCountLabel() {
+	public void updateCountLabel() {
 		countLabel.setText(Integer.toString(model.getCount()));
 	}
 	
@@ -1213,7 +1218,7 @@ public class GameView{
 	 * Purpose: Update the point of the label
 	 * Algorithm: Retrieve current point and set it to point label
 	 */
-	void updatePointLabel() {
+	public void updatePointLabel() {
 		pointsCount.setText(Integer.toString(model.getPoints()));
 	}
 	
@@ -1222,7 +1227,7 @@ public class GameView{
 	 * Purpose: Update the time of the label
 	 * Algorithm: Retrieve current time and set it to time label
 	 */
-	void updateTimeCount() {
+	public void updateTimeCount() {
 		timeCount.setText(Integer.toString(model.getTime()) + "s");		
 	}
 	

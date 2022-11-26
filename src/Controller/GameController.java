@@ -1,12 +1,15 @@
 /**
  * 
  */
-package NumPuz;
+package Controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import javax.swing.Timer;
+
+import Model.GameModel;
+import View.GameView;
 
 import javax.swing.JButton;
 
@@ -46,6 +49,10 @@ public class GameController implements ActionListener{
 	public GameController(GameModel model, GameView view) {
 		this.model = model;
 		this.view = view;
+	}
+	
+	public void play() {
+		view.play();
 		view.setTimer(new Timer(1000, this));
 		addButtonListeners();
 		addMenuListeners();
@@ -357,7 +364,7 @@ public class GameController implements ActionListener{
 	 */
 	public boolean saveToCSV(){
 		try {
-			FileWriter writer = new FileWriter("C:\\Users\\Admin\\CST8221_workspace\\JAP_A22\\src\\NumPuz\\save-load_file\\numpuzFile.csv");
+			FileWriter writer = new FileWriter("C:\\Users\\Admin\\CST8221_workspace\\JAP_A22\\src\\save-load_file\\numpuzFile.csv");
 	
 			for(int i = 0; i < view.getPuzzleButton().length; i++) {
 				for (int j = 0; j < view.getPuzzleButton()[i].length; j++) {
@@ -394,18 +401,6 @@ public class GameController implements ActionListener{
 		view.timerSettings();
 	}
 	
-	/**
-	 * Method name: main
-	 * Purpose: To run the NumPuz game program
-	 * @param args an array of command-line arguments for the application
-	 * Algorithm: initializes the Model, View, and Controller
-	 */
-	public static void main(String[] args) {
-		GameModel gameModel = new GameModel();			
-		GameView gameView = new GameView(gameModel);	//GUI of the game 
-		new GameController(gameModel, gameView);
-		//gameController.start();
-	}
 }
 
 
