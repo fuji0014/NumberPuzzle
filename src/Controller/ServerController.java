@@ -3,8 +3,11 @@ package Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.SwingUtilities;
+
 import Model.ServerModel;
 import View.ServerView;
+import Game.GameServer;
 
 public class ServerController {
 	private ServerModel serverModel;
@@ -18,18 +21,31 @@ public class ServerController {
 		addListeners();
 	}
 	
-	private void addListeners() {
-		serverView.getEndButton().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				serverView.getFrame().dispose();
-			}
-		});
-		
+	public void addListeners() {
 		serverView.getStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				serverModel.setPort(Integer.valueOf(serverView.getPortText().getText()));
+				System.out.println("Start button...");
+				System.out.println("port = " +  serverModel.getPort());
+				System.out.println("Waiting for clients to connect...");	
+				
+		    	String[] args = {String.valueOf(serverModel.getPort())};	//change to user input
+				GameServer.main(args, serverView);
 				//Finalize?
+			}
+		});
+		
+		serverView.getEndButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					serverView.getFrame().dispose();
+					//server.close();					
+				} catch (Exception e1) {
+					System.out.println("Disconnected. Closing." + e1);
+				}
+				
 			}
 		});
 		
@@ -42,4 +58,5 @@ public class ServerController {
 		});
 		
 	}
+	
 }

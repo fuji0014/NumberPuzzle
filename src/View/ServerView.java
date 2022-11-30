@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Color;
+import java.io.PrintStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -8,6 +9,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import Model.ServerModel;
@@ -15,7 +18,7 @@ import Model.ServerModel;
 public class ServerView {
 	JFrame frame;
 	JPanel panel;
-	JTextField textField;
+	JTextArea textField;
 	JTextField portText;
 	
 	JButton startButton;
@@ -38,6 +41,7 @@ public class ServerView {
 		frame.setResizable(false);
 		initServerFrame();
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(0);
 	}
 	
 	private void initServerFrame() {
@@ -85,11 +89,18 @@ public class ServerView {
 	    panel.add(finalizeBox);
 	    panel.add(endButton);
 		
-		textField = new JTextField();
+		textField = new JTextArea();
 		textField.setBounds(50, 40, 640, 150);
 		textField.setEditable(false);
 		textField.setVisible(true);
-		panel.add(textField);
+		JScrollPane scroll = new JScrollPane(textField);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setBounds(50, 40, 640, 150);
+		scroll.setVisible(true);
+		PrintStream printStream = new PrintStream(new CustomOutputStream(textField));
+		System.setOut(printStream);
+		System.setErr(printStream);
+		panel.add(scroll);
 	}
 	
 	public JFrame getFrame() {
@@ -108,11 +119,11 @@ public class ServerView {
 		this.panel = panel;
 	}
 	
-	public JTextField getTextField() {
+	public JTextArea getTextField() {
 		return this.textField;
 	}
 	
-	public void setTextField(JTextField textField) {
+	public void setTextField(JTextArea textField) {
 		this.textField = textField;
 	}
 
