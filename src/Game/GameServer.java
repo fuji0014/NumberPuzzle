@@ -137,12 +137,14 @@ public class GameServer implements Runnable{
 				st = new StringTokenizer(clientData, "@");	//game basic separator
 				strCliId = st.nextToken();
 				strProtocol = st.nextToken();
-				System.out.println("Saving player: ");
 				Player newPlayer = new Player();
-				newPlayer.clientID = Integer.valueOf(strCliId);
+				newPlayer.clientID = nclient;
 				newPlayer.name = strProtocol;
 				playerList.add(newPlayer);
+				System.out.println("Saving player: Client Id = " + newPlayer.clientID + ",  User = " + newPlayer.name);
+				System.out.println("Sending ID to client.");
 				out.println(nclient + "@" + strProtocol);
+				out.flush();
 				
 				while(true) {
 					clientData = in.readLine();
@@ -157,7 +159,7 @@ public class GameServer implements Runnable{
 						break;
 					} else if(strProtocol.equals("P1")) {
 						out.println(strCliId + "@" + strData);
-						
+						out.flush();
 					} else if (strProtocol.equals("P2")) {
 						//
 						

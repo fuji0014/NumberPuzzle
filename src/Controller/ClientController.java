@@ -13,14 +13,14 @@ import javax.swing.SwingUtilities;
 
 import Model.ClientModel;
 import View.ClientView;
-import Game.GameClient;
+import Game.GameMVC;
 import Game.GameBasic;
+import Game.GameClient;
 
 public class ClientController {
 	private ClientModel clientModel;
 	private ClientView clientView;
 	private GameBasic gameBasic;
-	private GameClient client;
 
 	public ClientController() {}
 	
@@ -69,7 +69,6 @@ public class ClientController {
 					print.println(message);
 					String output = inFromServer.readLine();
 					System.out.println("Receiving message: " + output);
-
 				} catch (IOException e1) {
 					System.out.println("Error [new game]...");
 					e1.printStackTrace();
@@ -109,13 +108,12 @@ public class ClientController {
 		clientView.getOkButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("ok click");
 				String gameData = "";
 				gameBasic.setDim(clientView.getCbDim().getSelectedItem().toString());
 				gameBasic.setType(clientView.getCbType().getSelectedItem().toString());
 				int dimInt = Integer.valueOf(gameBasic.getDim());
 				if(gameBasic.getType().equals("Text")) {
-					//clientView.textInputDialog();
+					clientView.textInputDialog(dimInt);
 					for(int i = 0; i < (dimInt*dimInt); i++) {
 						gameData = gameData + clientView.getText().charAt(i) + GameBasic.FIELD_SEPARATOR;
 						if(i == (dimInt*dimInt - 1)) {
@@ -150,13 +148,14 @@ public class ClientController {
 //			}
 //		});
 //		
-//		clientView.getPlayButton().addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				
-//			}
-//		});
-//		
+		clientView.getPlayButton().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				GameMVC mvc = new GameMVC();
+				mvc.start();
+			}
+		});
+		
 //		clientView.getSendDataButton().addActionListener(new ActionListener() {
 //			@Override
 //			public void actionPerformed(ActionEvent e) {

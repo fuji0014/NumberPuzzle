@@ -200,7 +200,7 @@ public class ClientView {
   		dialog.setResizable(false);
 	}
 	
-	public void textInputDialog() {
+	public void textInputDialog(int dim) {
 		while(true) {
 			text = (String)JOptionPane.showInputDialog(
 	               frame,
@@ -213,7 +213,7 @@ public class ClientView {
 	            );	
 		
 			//Check whether the entered text input is long enough of the game
-			if(text == null || text.length() < 36) {
+			if(text == null || text.length() < (dim*dim)) {
 				inputErrorDialog();
 			} else {
 				break;

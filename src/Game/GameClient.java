@@ -88,15 +88,14 @@ public class GameClient implements AutoCloseable{
 		String clientData = "";
 		try {			
 			clientData = clientModel.getClientData();
-			System.out.println("Sending message: " + clientData);
-			System.out.println("Client: " + clientModel.getId());
+			System.out.println("Sending initial message...");
 			print.println(clientData);
-			System.out.println("client data: " + clientData);
 			String output = inFromServer.readLine();
 			System.out.println("Receiving message: " + output);
 			StringTokenizer st = new StringTokenizer(output, "@");	//game basic separator
 			clientModel.setId(Integer.valueOf(st.nextToken()));
-						
+			System.out.println("Client Id: " + clientModel.getId());
+			print.flush();			
 		} catch (Exception e) {
 		}
 		
