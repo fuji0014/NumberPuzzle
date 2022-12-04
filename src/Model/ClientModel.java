@@ -2,17 +2,19 @@ package Model;
 
 import Controller.GameController;
 import View.GameView;
+import Game.GameBasic;
 
 public class ClientModel {
-	String user;
-	String server;
-	String port;
-	int id;
-	String clientData;
+	private String user;
+	private String server;
+	private String port;
+	private String clientData;
+	private int id;
 	
-	GameModel gameModel;			
-	GameView gameView;	
-	GameController gameController;
+	private GameModel gameModel;			
+	private GameView gameView;	
+	private GameController gameController;
+	private GameBasic gameBasic;
 	
 	public ClientModel(){
 		user = "Amy";
@@ -25,12 +27,18 @@ public class ClientModel {
 		gameController = new GameController(gameModel, gameView);
 	}
 	
-	public void initializeGame() {
-		//initialize here (ex. size, text, etc)
+	public void startGame() {
+		gameView.setGameController(gameController);
+		gameController.play(gameBasic);
 	}
 	
-	public void startGame() {
-		gameController.play();
+	public GameBasic getGameBasic() {
+		gameBasic = gameView.getGameBasic();
+		return gameBasic;		
+	}
+	
+	public void setGameBasic(GameBasic gameBasic) {
+		this.gameBasic = gameBasic;
 	}
 	
 	public String getUser() {

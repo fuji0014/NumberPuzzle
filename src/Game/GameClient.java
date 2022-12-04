@@ -1,7 +1,5 @@
 package Game;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -75,12 +73,14 @@ public class GameClient implements AutoCloseable{
             clientController.addListeners(socket);
         } catch (UnknownHostException e) {
         	System.out.println("Don't know about host " + hostName + "\n");
+        	clientView.serverErrorDialog();
             //System.exit(1);
         } catch (IOException e) {
         	System.out.println("Couldn't get I/O for the connection to " + hostName + "\n");
+        	clientView.serverErrorDialog();
             //System.exit(1);
         } catch (Exception e) {
-        	
+        	System.out.println("Error [main]:  " + e + "\n");
         }
 	}
 	
@@ -92,13 +92,13 @@ public class GameClient implements AutoCloseable{
 			print.println(clientData);
 			String output = inFromServer.readLine();
 			System.out.println("Receiving message: " + output);
-			StringTokenizer st = new StringTokenizer(output, "@");	//game basic separator
+			StringTokenizer st = new StringTokenizer(output, GameBasic.PROTOCOL_SEPARATOR);	//game basic separator
 			clientModel.setId(Integer.valueOf(st.nextToken()));
 			System.out.println("Client Id: " + clientModel.getId());
 			print.flush();			
 		} catch (Exception e) {
+			System.out.println("Error [protocol]:  " + e + "\n");
 		}
-		
 	}
 
 	@Override

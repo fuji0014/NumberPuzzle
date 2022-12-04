@@ -80,7 +80,7 @@ public class ClientView {
 		initGUI();
 	}
 	
-	public void initGUI() {
+	private void initGUI() {
 		JLabel userLabel = new JLabel("User:");
 		userLabel.setBounds(90, 5, 75, 20);
 		
@@ -158,7 +158,7 @@ public class ClientView {
 		panel.add(scroll);
 	}
 	
-	public void initGameDialog() {
+	private void initGameDialog() {
 		dialog = new JDialog(frame, "New Game", Dialog.ModalityType.DOCUMENT_MODAL);
 		JLabel label = new JLabel("Design for New Game:");
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -167,23 +167,23 @@ public class ClientView {
 		//Type
   		JLabel typeLabel = new JLabel();
   		typeLabel.setText("Type");
-  		typeLabel.setBounds(0, 20, 80, 20);	
+  		typeLabel.setBounds(15, 20, 80, 20);	
   		
   		String types[] = {"Numbers", "Text"};        					//Game type selection
   		cbType = new JComboBox<String>(types); 
-  	    cbType.setBounds(0, 50, 80, 20);
+  	    cbType.setBounds(15, 50, 80, 20);
   	    
 		//Dimension
 		JLabel dimLabel = new JLabel();
 		dimLabel.setText("Dimension");
-		dimLabel.setBounds(90, 20, 80, 20);		
+		dimLabel.setBounds(100, 20, 80, 20);		
 		
 		String dims[] = {"3", "4", "5", "6"};        					//List of the game button dimension
 		cbDim = new JComboBox<String>(dims); 
-		cbDim.setBounds(90, 50, 40, 20); 
+		cbDim.setBounds(100, 50, 40, 20); 
 	    
 	    okButton = new JButton("Create new game");
-	    okButton.setBounds(20, 75, 130, 20);
+	    okButton.setBounds(20, 75, 150, 20);
 	    
 	    //Add buttons to dialog   		
   		dialog.add(cbType);  		
@@ -226,6 +226,13 @@ public class ClientView {
 		JOptionPane.showMessageDialog(frame,
 			    "The text you entered is too short.\n"
 			    + "Please try again.",
+			    "Error notice",
+			    JOptionPane.WARNING_MESSAGE);
+	}
+	
+	public void serverErrorDialog() {
+		JOptionPane.showMessageDialog(frame,
+				"Unable to connect as Server has not started.", 
 			    "Error notice",
 			    JOptionPane.WARNING_MESSAGE);
 	}

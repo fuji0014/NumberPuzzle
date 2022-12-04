@@ -1,25 +1,13 @@
 package Game;
 
-import java.awt.Dialog;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
-
-import Model.ClientModel;
+import java.util.StringTokenizer;
 
 public class GameBasic {
 	final String solution1 = "";
 	
-	static final String PROTOCOL_SEPARATOR = "@";		//separator
+	public static final String PROTOCOL_SEPARATOR = "@";		//separator
 	public static final String FIELD_SEPARATOR = ",";
-	static final String LINE_SEPARATOR = ";";
+	public static final String LINE_SEPARATOR = ";";
 	static final String PROTOCOL_END = "P0";			//ending connection
 	static final String PROTOCOL_SENDGAME = "P1";		//sending game
 	static final String PROTOCOL_RECVGAME = "P2";		//receiving game
@@ -30,11 +18,11 @@ public class GameBasic {
 	
 	private int clientId = 0;
 	
-	String dim;
-	String type;
-	String gameData = "";
-	int points;
-	int marks;
+	private String dim = "3";
+	private String type = "Numbers";
+	private String gameData = "1,2,3,4,5,6,7,8,null";
+	private int points = 0;
+	private int time = 0;
 	
 	public GameBasic() {
 		
@@ -48,16 +36,35 @@ public class GameBasic {
 		return "0" + PROTOCOL_SEPARATOR + user;
 	}
 	
-	public String endGame(int clientdId) {
-		return (Integer.toString(clientdId) + PROTOCOL_SEPARATOR + PROTOCOL_END + PROTOCOL_SEPARATOR + " ");
+	public String endGame() {
+		return (Integer.toString(clientId) + PROTOCOL_SEPARATOR + PROTOCOL_END + PROTOCOL_SEPARATOR + " ");
 	}
 	
-	public String sendGame(int clientdId, JFrame frame) {		
-		return (Integer.toString(clientdId) + PROTOCOL_SEPARATOR + PROTOCOL_SENDGAME
-				+ PROTOCOL_SEPARATOR + dim+ FIELD_SEPARATOR + type
+	public String sendGame() {		
+		return (Integer.toString(clientId) + PROTOCOL_SEPARATOR + PROTOCOL_SENDGAME
+				+ PROTOCOL_SEPARATOR + dim + FIELD_SEPARATOR + type
 				+ LINE_SEPARATOR + gameData);
 	}
 	
+	public String receiveGame() {
+		return (Integer.toString(clientId) + PROTOCOL_SEPARATOR + PROTOCOL_RECVGAME + PROTOCOL_SEPARATOR + " ");
+	}
+	
+	public String sendData() {
+		return (Integer.toString(clientId) + PROTOCOL_SEPARATOR + PROTOCOL_DATA + PROTOCOL_SEPARATOR +
+				Integer.toString(points) + FIELD_SEPARATOR + Integer.toString(time));
+	}
+	
+	public String[] gameDataToArray() {
+		StringTokenizer st = new StringTokenizer(gameData, FIELD_SEPARATOR);	
+		int intDim = Integer.valueOf(dim);
+		String[] data = new String[intDim*intDim];
+		
+		for(int i = 0; i < data.length; i++) {
+			data[i] = st.nextToken();
+		}
+		return data;
+	}
 	
 	public void setDim(String dim) {
 		this.dim = dim;
@@ -81,6 +88,30 @@ public class GameBasic {
 	
 	public String getGameData() {
 		return gameData;
+	}
+
+	public void setTime(int time) {
+		this.time = time;
+	}
+	
+	public int getTime() {
+		return time;
+	}
+	
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	
+	public int getPoints() {
+		return points;
+	}
+	
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
+	}
+	
+	public int getClientId() {
+		return clientId;
 	}
 
 }

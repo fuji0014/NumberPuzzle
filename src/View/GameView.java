@@ -22,7 +22,9 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
+import Controller.GameController;
 import Model.GameModel;
+import Game.GameBasic;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -248,6 +250,10 @@ public class GameView{
 	 */
 	private JDialog dialog;
 	
+	private GameController controller;
+	
+	private GameBasic gameBasic;
+	
 	
 	/**
 	 * Method name: Overloaded constructor 
@@ -273,6 +279,7 @@ public class GameView{
 		frame.setLayout(null);
 		frame.setSize(665,690);
 		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		//Frame GUIs
 		splashScreenGUI(window);
@@ -386,7 +393,9 @@ public class GameView{
 			break;
 		default:
 			//Exit game
-			System.exit(0);
+			gameBasic.setPoints(model.getPoints());
+			gameBasic.setTime(model.getTime());
+			frame.dispose();
 			break;
 		}
 	}
@@ -415,7 +424,9 @@ public class GameView{
 			newGame();
 		} else {
 			//Exit game
-			System.exit(0);
+			gameBasic.setPoints(model.getPoints());
+			gameBasic.setTime(model.getTime());
+			frame.dispose();
 		}
 	}
 	
@@ -516,7 +527,9 @@ public class GameView{
 				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
 		if (exit == 0) {
 			//User chosen yes
-			System.exit(0);
+			gameBasic.setPoints(model.getPoints());
+			gameBasic.setTime(model.getTime());
+			frame.dispose();
 		}
 	}
 	
@@ -735,13 +748,12 @@ public class GameView{
 		
 	/**
 	 * Method name: leftGUI
-	 * Purpose: Contains dropdown selectiong and buttons for the left panel
+	 * Purpose: Contains dropdown selection and buttons for the left panel
 	 * Algorithm: Calls the methods that sets up the components
 	 */
 	public void leftGUI() {
 		dropDown();						//Level and Dimension selections
 		colorButton();
-		//radioButton(panel);						//Design or Play selection
 		timerStartButton();		//Start button
 	}
 	
@@ -1183,9 +1195,52 @@ public class GameView{
 
 			return true;
 		} catch (Exception e) {
-			// TODO Reset the puzzleButton to what it was before method was called
+			// Reset the puzzleButton to what it was before method was called
 			return false;
 		}
+	}
+	
+	public void loadGameFromData() {
+		int gameDim = Integer.valueOf(gameBasic.getDim());
+		cbDim.setSelectedIndex(gameDim - 3);
+		removeGameButton();
+		
+		puzzleButton = new JButton[gameDim][gameDim];		
+		String[] data = gameBasic.gameDataToArray();
+		
+		//Read column and row and save to button
+		for(int i = 0; i < gameDim; i++) {
+			for(int j = 0; j < gameDim; j++) {
+				JButton button = new JButton();
+				puzzleButton[i][j] = button;
+				if(data[i*gameDim + j].equals("null")) {
+					puzzleButton[i][j].setText(null);
+				} else {
+					puzzleButton[i][j].setText(data[i*gameDim + j]);					
+				}
+				
+			}
+		}
+		
+		//Save last column as text solution
+		model.setTextSolution(data);
+		for(int i = 0; i < data.length; i++) {
+			if(data[i].equals("null"))
+				model.setTextSolution(null, i);
+		}
+		
+		model.setDimSize(gameDim);
+		model.setGameType(gameBasic.getType());		
+		
+		
+		initPuzzleButton();
+		gameButton(getCurrentColor());
+		//controller.puzzleButtonListenerForData(gameDim);
+		controller.puzzleButtonListener();
+		model.setPoints(gameBasic.getPoints());
+		
+		middlePanel.revalidate();
+		middlePanel.repaint();
 	}
 	
 	/**
@@ -1810,4 +1865,20 @@ public class GameView{
 	public void setPuzzleButton(JButton[][] puzzleButton) {
 		this.puzzleButton = puzzleButton;
 	}	
+	
+	public GameController getGameController() {
+		return controller;
+	}
+	
+	public void setGameController(GameController controller) {
+		this.controller = controller;
+	}
+	
+	public GameBasic getGameBasic() {
+		return gameBasic;
+	}
+	
+	public void setGameBasic(GameBasic gameBasic) {
+		this.gameBasic = gameBasic;
+	}
 }

@@ -1,10 +1,7 @@
 package View;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 
 import javax.swing.JTextArea;
 
@@ -25,22 +22,3 @@ class CustomOutputStream extends OutputStream {
         textArea.update(textArea.getGraphics());
     }
 }
-
-
-
-
-
-//String input = in.readLine();
-//System.out.println("initial: " + input);
-
-//while(true) {
-//	
-//	System.out.println("Here!");
-//	if(!server.protocol(serverView)) {
-//		System.out.println("Client disconnected!");	
-//		server.close();
-//		break;
-//	}
-//	System.out.println("Here after!");
-//}
-//}

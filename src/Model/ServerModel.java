@@ -24,4 +24,5 @@ public class ServerModel {
 	public void setFinalize(boolean finalize) {
 		this.finalize = finalize;
 	}
+	
 }

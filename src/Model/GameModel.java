@@ -342,6 +342,15 @@ public class GameModel {
 	}
 	
 	/**
+	 * Method name: setPoints
+	 * Purpose: Sets the points for the user
+	 * @param points Points in integer
+	 */
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	
+	/**
 	 * Method name: getCount
 	 * @return count of clicks in integer
 	 */

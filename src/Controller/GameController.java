@@ -1,6 +1,3 @@
-/**
- * 
- */
 package Controller;
 
 import java.awt.event.ActionEvent;
@@ -10,6 +7,7 @@ import javax.swing.Timer;
 
 import Model.GameModel;
 import View.GameView;
+import Game.GameBasic;
 
 import javax.swing.JButton;
 
@@ -47,10 +45,17 @@ public class GameController implements ActionListener{
 	 * @param view GameView object
 	 */
 	public GameController(GameModel model, GameView view) {
+		GameController controller = new GameController();
 		this.model = model;
 		this.view = view;
+		view.setGameController(controller);
 	}
 	
+	/**
+	 * Method name: play
+	 * Purpose: Starts the game and adding listeners to the buttons
+	 * Algorithm: Calls methods from view class and initialize the action listeners
+	 */
 	public void play() {
 		view.play();
 		view.setTimer(new Timer(1000, this));
@@ -58,6 +63,18 @@ public class GameController implements ActionListener{
 		addMenuListeners();
 		addListeners();
 		puzzleButtonListener();
+	}
+	
+	/**
+	 * Method name: play
+	 * Purpose: Starts the game and sets the game values from parameter
+	 * Algorithm: Calls local play method and sets game setting and loads game from the provided data
+	 * @param gameBasic GameBasic object
+	 */
+	public void play(GameBasic gameBasic) {
+		play();
+		view.setGameBasic(gameBasic);
+		view.loadGameFromData();
 	}
 	
 	/**
@@ -307,9 +324,34 @@ public class GameController implements ActionListener{
 	 * Algorithm: Loops over the retrieved puzzle button array objects from game view object 
 	 * and adds listener to each button  
 	 */
-	private void puzzleButtonListener() {
+	public void puzzleButtonListener() {
 		for (int i = 0; i < model.getDimSize(); ++i) {
 			for (int j = 0; j < model.getDimSize(); ++j) {
+				if(view.getPuzzleButton()[i][j].getText() != null){
+					view.getPuzzleButton()[i][j].addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {							
+							view.getTimer().start();
+							if(!view.puzzleCompleted()) {
+								view.moveButton((JButton)e.getSource());
+								if(view.puzzleCompleted()) {
+									model.calculateTotalPoints();
+									view.updatePointLabel();
+									view.displayWinDialog();
+								}
+							} else {
+								view.displayShuffleErrorDialog();
+							}
+						}
+					});	
+				}
+			}
+		}
+	}
+	
+	public void puzzleButtonListenerForData(int dimSize) {
+		for (int i = 0; i < dimSize; ++i) {
+			for (int j = 0; j < dimSize; ++j) {
 				if(view.getPuzzleButton()[i][j].getText() != null){
 					view.getPuzzleButton()[i][j].addActionListener(new ActionListener() {
 						@Override

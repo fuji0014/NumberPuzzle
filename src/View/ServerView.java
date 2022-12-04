@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -16,16 +17,16 @@ import javax.swing.JTextField;
 import Model.ServerModel;
 
 public class ServerView {
-	JFrame frame;
-	JPanel panel;
-	JTextArea textField;
-	JTextField portText;
+	private JFrame frame;
+	private JPanel panel;
+	private JTextArea textField;
+	private JTextField portText;
 	
-	JButton startButton;
-	JButton resultsButton;
-	JButton endButton;
+	private JButton startButton;
+	private JButton resultsButton;
+	private JButton endButton;
 	
-	JCheckBox finalizeBox;	
+	private JCheckBox finalizeBox;	
 	
 	public static final Color mainBGColor = new Color(224,227,244);
 	
@@ -61,12 +62,13 @@ public class ServerView {
 		initGUI();
 	}
 	
-	public void initGUI() {
+	private void initGUI() {
 		JLabel portLabel = new JLabel("Port:");
 		portLabel.setBounds(125, 5, 75, 20);
 		
 		portText = new JTextField();
 		portText.setBounds(155, 5, 75, 20);
+		portText.setText("2000");
 		
 		startButton = new JButton("Start");
 	    startButton.setBounds(240, 5, 75, 20);
@@ -101,6 +103,17 @@ public class ServerView {
 		System.setOut(printStream);
 		System.setErr(printStream);
 		panel.add(scroll);
+	}
+	
+	public void resultDialog(StringBuilder sb) {
+		JOptionPane.showMessageDialog(frame, sb);
+	}
+	
+	public void clientErrorDialog() {
+		JOptionPane.showMessageDialog(frame,
+				"Clients still connected.\n Please end client before ending server.", 
+			    "Error notice",
+			    JOptionPane.WARNING_MESSAGE);
 	}
 	
 	public JFrame getFrame() {
