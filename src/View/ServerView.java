@@ -97,7 +97,7 @@ public class ServerView {
 	 */
 	private void initServerFrame() {
 		JLabel label = new JLabel();
-		ImageIcon title = new ImageIcon(getClass().getClassLoader().getResource("images/server.png"));
+		ImageIcon title = new ImageIcon(getClass().getClassLoader().getResource("images/server.PNG"));
 		label.setIcon(title);
 		label.setLayout(null);
 		label.setBounds(-50, -150, 1000, 500);

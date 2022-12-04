@@ -141,7 +141,7 @@ public class ClientView {
 	 */
 	private void initClientFrame() {
 		JLabel label = new JLabel();
-		ImageIcon title = new ImageIcon(getClass().getClassLoader().getResource("images/client.png"));
+		ImageIcon title = new ImageIcon(getClass().getClassLoader().getResource("images/client.PNG"));
 		label.setIcon(title);
 		label.setLayout(null);
 		label.setBounds(-85, -150, 1000, 500);

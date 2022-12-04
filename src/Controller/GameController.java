@@ -349,31 +349,6 @@ public class GameController implements ActionListener{
 		}
 	}
 	
-	public void puzzleButtonListenerForData(int dimSize) {
-		for (int i = 0; i < dimSize; ++i) {
-			for (int j = 0; j < dimSize; ++j) {
-				if(view.getPuzzleButton()[i][j].getText() != null){
-					view.getPuzzleButton()[i][j].addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {							
-							view.getTimer().start();
-							if(!view.puzzleCompleted()) {
-								view.moveButton((JButton)e.getSource());
-								if(view.puzzleCompleted()) {
-									model.calculateTotalPoints();
-									view.updatePointLabel();
-									view.displayWinDialog();
-								}
-							} else {
-								view.displayShuffleErrorDialog();
-							}
-						}
-					});	
-				}
-			}
-		}
-	}
-
 	/**
 	 * Method name: updateGameButton
 	 * Purpose: Contains action listener and actionPerformed methods to trigger actions by user

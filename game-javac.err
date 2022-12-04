@@ -1,0 +1,4 @@
+src\Game\GameClient.java:25: warning: [try] auto-closeable resource GameClient has a member method close() that could throw InterruptedException
+public class GameClient implements AutoCloseable{
+       ^
+1 warning

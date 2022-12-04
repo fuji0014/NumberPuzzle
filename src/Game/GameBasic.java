@@ -152,7 +152,7 @@ public class GameBasic {
 	/**
 	 * Method name: setDim
 	 * Purpose: Setter for dimension
-	 * @param Dimension of game in String
+	 * @param dim of game in String
 	 */
 	public void setDim(String dim) {
 		this.dim = dim;
@@ -170,7 +170,7 @@ public class GameBasic {
 	/**
 	 * Method name: setType
 	 * Purpose: Setter for game type
-	 * @param Game type of game in String
+	 * @param type of game in String
 	 */
 	public void setType(String type) {
 		this.type = type;
@@ -188,7 +188,7 @@ public class GameBasic {
 	/**
 	 * Method name: setGameData
 	 * Purpose: Setter for game data
-	 * @param Game data in String
+	 * @param gameData in String
 	 */
 	public void setGameData(String gameData) {
 		this.gameData = gameData;
@@ -206,7 +206,7 @@ public class GameBasic {
 	/**
 	 * Method name: setTime
 	 * Purpose: Setter for time
-	 * @param User's time in integer
+	 * @param time in integer
 	 */
 	public void setTime(int time) {
 		this.time = time;
@@ -224,7 +224,7 @@ public class GameBasic {
 	/**
 	 * Method name: setPoints
 	 * Purpose: Setter for points
-	 * @param User's points in integer
+	 * @param points in integer
 	 */
 	public void setPoints(int points) {
 		this.points = points;
@@ -242,7 +242,7 @@ public class GameBasic {
 	/**
 	 * Method name: setClientId
 	 * Purpose: Setter for client id
-	 * @param Client Id in integer
+	 * @param clientId in integer
 	 */
 	public void setClientId(int clientId) {
 		this.clientId = clientId;

@@ -153,7 +153,7 @@ public class ClientModel {
 	/**
 	 * Method name: getId
 	 * Purpose: Sets client id
-	 * @param id integer of the client id
+	 * @return id in integer
 	 */
 	public int getId() {
 		return id;
