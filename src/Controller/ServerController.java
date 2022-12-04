@@ -60,13 +60,19 @@ public class ServerController {
 		serverView.getStartButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				serverModel.setPort(Integer.valueOf(serverView.getPortText().getText()));
-				System.out.println("Start button...");
-				System.out.println("port = " +  serverModel.getPort());
-				System.out.println("Waiting for clients to connect...");	
+				String port = serverView.getPortText().getText();
+
+				if(!port.equals("")) {
+					serverModel.setPort(Integer.valueOf(port));
+					System.out.println("Start button...");
+					System.out.println("port = " +  serverModel.getPort());
+					System.out.println("Waiting for clients to connect...");					
+			    	String[] args = {String.valueOf(serverModel.getPort())};	//change to user input
+					GameServer.main(args, serverView);
+				} else {
+					serverView.portErrorDialog();
+				}
 				
-		    	String[] args = {String.valueOf(serverModel.getPort())};	//change to user input
-				GameServer.main(args, serverView);
 			}
 		});
 		

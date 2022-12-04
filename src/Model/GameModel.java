@@ -85,6 +85,10 @@ public class GameModel {
 	public GameModel() {
 	}
 	
+	/**
+	 * Method name: play 
+	 * Purpose: sets default values 
+	 */
 	public void play() {
 		time = 180;
 		text = null;

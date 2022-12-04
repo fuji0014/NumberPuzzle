@@ -249,22 +249,33 @@ public class GameView{
 	 * Dialog to provide color change during the game for the buttons
 	 */
 	private JDialog dialog;
-	
+	/**
+	 * GameController object
+	 */
 	private GameController controller;
-	
+	/**
+	 * GameBasic object
+	 */
 	private GameBasic gameBasic;
+	/**
+	 * Boolean for whether clientserver is used or not
+	 */
+	public static boolean clientServer = false;
 	
 	
 	/**
 	 * Method name: Overloaded constructor 
-	 * Purpose: Initializes class variables, calls local methods to set GUI for the window and set default values
+	 * Purpose: Initializes game model object
 	 * @param gameModel GameModel object for access to database
-	 * Algorithm: Sets settings for splash screen, main game frame, GUI components within the frame, and color dialog.
 	 */
 	public GameView (GameModel gameModel) {
 		this.model = gameModel;
 	}
 	
+	/**
+	 * Method name: play
+	 * Algorithm: Sets settings for splash screen, main game frame, GUI components within the frame, and color dialog.
+	 */
 	public void play() {
 		model.play();
 		initPuzzleButton();
@@ -393,8 +404,10 @@ public class GameView{
 			break;
 		default:
 			//Exit game
-			gameBasic.setPoints(model.getPoints());
-			gameBasic.setTime(model.getTime());
+			if(clientServer) {
+				gameBasic.setPoints(model.getPoints());
+				gameBasic.setTime(model.getTime());
+			}
 			frame.dispose();
 			break;
 		}
@@ -424,8 +437,10 @@ public class GameView{
 			newGame();
 		} else {
 			//Exit game
-			gameBasic.setPoints(model.getPoints());
-			gameBasic.setTime(model.getTime());
+			if(clientServer) {
+				gameBasic.setPoints(model.getPoints());
+				gameBasic.setTime(model.getTime());
+			}
 			frame.dispose();
 		}
 	}
@@ -527,8 +542,10 @@ public class GameView{
 				JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null);
 		if (exit == 0) {
 			//User chosen yes
-			gameBasic.setPoints(model.getPoints());
-			gameBasic.setTime(model.getTime());
+			if(clientServer) {
+				gameBasic.setPoints(model.getPoints());
+				gameBasic.setTime(model.getTime());
+			}			
 			frame.dispose();
 		}
 	}
@@ -1200,6 +1217,12 @@ public class GameView{
 		}
 	}
 	
+	/**
+	 * Method name: loadFrloadGameFromDataomCSV
+	 * Purpose: Load from the gameBasic object and save it to the database
+	 * Algorithm: Reads from game basic object and stores them as a puzzle button text where the 
+	 * last row is saved as a text for answer of the puzzle
+	 */
 	public void loadGameFromData() {
 		int gameDim = Integer.valueOf(gameBasic.getDim());
 		cbDim.setSelectedIndex(gameDim - 3);
@@ -1866,18 +1889,38 @@ public class GameView{
 		this.puzzleButton = puzzleButton;
 	}	
 	
+	/**
+	 * Method name: getGameController
+	 * Purpose: Return the controller
+	 * @return controller 
+	 */
 	public GameController getGameController() {
 		return controller;
 	}
 	
+	/**
+	 * Method name: setGameController
+	 * Purpose: Sets the controller
+	 * @param controller GameController object
+	 */
 	public void setGameController(GameController controller) {
 		this.controller = controller;
 	}
 	
+	/**
+	 * Method name: getGameBasic
+	 * Purpose: Return the gameBasic
+	 * @return gameBasic 
+	 */
 	public GameBasic getGameBasic() {
 		return gameBasic;
 	}
 	
+	/**
+	 * Method name: setGameBasic
+	 * Purpose: Sets the gameBasic
+	 * @param gameBasic GameBasic object
+	 */
 	public void setGameBasic(GameBasic gameBasic) {
 		this.gameBasic = gameBasic;
 	}

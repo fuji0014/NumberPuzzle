@@ -11,6 +11,7 @@ import java.util.StringTokenizer;
 
 import Model.ClientModel;
 import View.ClientView;
+import View.GameView;
 import Game.GameBasic;
 import Game.GameClient;
 
@@ -56,6 +57,7 @@ public class ClientController {
 		this.clientModel = clientModel;
 		this.clientView = clientView;
 		this.gameBasic = gameBasic;
+		GameView.clientServer = true;
 		connectListener();
 	}
 	
@@ -68,19 +70,28 @@ public class ClientController {
 		clientView.getConnectButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				clientModel.setPort(clientView.getPortText().getText());
-				clientModel.setUser(clientView.getUserText().getText());
-				clientModel.setServerName(clientView.getServerText().getText());
-				clientModel.setClientData(gameBasic.initialStart(clientModel.getUser()));
-				clientModel.setId(gameBasic.getInitClientId());
-
-				System.out.println("Connection button...");
-				//Enable all buttons on 2nd line if connection is successful
+				String port = clientView.getPortText().getText();
+				String user = clientView.getUserText().getText();
+				String name = clientView.getServerText().getText();
 				
-				//Send Id to server
-		    	String[] args = {clientModel.getServerName(), String.valueOf(clientModel.getPort())};
-				GameClient.main(args, clientView, clientModel);
-				gameBasic.setClientId(clientModel.getId());
+				if(port.equals("") || user.equals("") || name.equals("")) {
+					clientView.portErrorDialog();
+				} else {
+					clientModel.setPort(port);
+					clientModel.setUser(user);
+					clientModel.setServerName(name);
+					clientModel.setClientData(gameBasic.initialStart(clientModel.getUser()));
+					clientModel.setId(gameBasic.getInitClientId());
+	
+					System.out.println("Connection button...");
+					
+					//Send Id to server
+			    	String[] args = {clientModel.getServerName(), String.valueOf(clientModel.getPort())};
+					GameClient.main(args, clientView, clientModel);
+					gameBasic.setClientId(clientModel.getId());
+				}
+				
+				
 			}
 		});
 	}

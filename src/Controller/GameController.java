@@ -39,7 +39,7 @@ public class GameController implements ActionListener{
 	/**
 	 * Method name: GameController, Overloaded constructor 
 	 * Purpose: Initialize objects and Timer and add listeners to buttons, menu, and puzzleButtons
-	 * Algorithm: Takes in GameModel and GameView parameter to initalize class variable objects and calls methods
+	 * Algorithm: Takes in GameModel and GameView parameter to initialize class variable objects and calls methods
 	 * to add listeners
 	 * @param model GameModel object 
 	 * @param view GameView object
